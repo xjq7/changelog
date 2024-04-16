@@ -1,11 +1,6 @@
 export const defaultMatcher = (rawCommitInfo: RawCommit) => {
   const { message } = rawCommitInfo;
 
-  const messageMatchRes = message.match(/^Merge branch 'feature-(\w{6})-(.+?)' into 'feature-\1'/);
-
-  if (!messageMatchRes) return false;
-  const [, , author] = messageMatchRes;
-
   const [, type, scope, description] = message.match(/(feat|fix)(?:\((.*?)\))?:\s?(.+)/) || [];
 
   if (!type || !description) return false;
@@ -14,7 +9,6 @@ export const defaultMatcher = (rawCommitInfo: RawCommit) => {
     type,
     scope,
     description,
-    author,
   };
 };
 

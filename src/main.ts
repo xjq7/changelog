@@ -40,7 +40,7 @@ const pkgPath = path.resolve(root, 'package.json');
 const pkgStr = fs.readFileSync(pkgPath, 'utf8');
 const pkgJson = JSON.parse(pkgStr);
 
-const configPath = path.resolve(process.cwd(), 'tubitlog.config.js');
+const configPath = path.resolve(process.cwd(), 'changelog.config.js');
 
 const prettierConfig = prettier.resolveConfig.sync(process.cwd());
 
