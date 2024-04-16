@@ -39,7 +39,7 @@ export async function getTagCommitId(tag: string) {
 }
 
 export async function generateTag(name: string) {
-  return execa('git', ['tag', '-a', name, '-m', 'tubitlog 自动创建']).then((res) => res.stdout);
+  return execa('git', ['tag', '-a', name, '-m', '@eat-fish/changelog 自动创建']).then((res) => res.stdout);
 }
 
 export async function deleteTag(name: string) {
