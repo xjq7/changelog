@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.0.4](https://github.com/xjq7/changelog/compare/v1.0.3...v1.0.4)
+
+### 🐛 Bug Fix
+
+- [27c08cf](https://github.com/xjq7/changelog/commit/27c08cf8990c8b8b29d1176a0a4418ee831cc021) 生成 tag 备注调整 @***xiajieqiong***
+- [e46dc56](https://github.com/xjq7/changelog/commit/e46dc56adb9609353477387513fb72edc9a81f58) last commit 回滚 取消暂存 @***xiajieqiong***
+- [bc352eb](https://github.com/xjq7/changelog/commit/bc352eb70c346c664a2cda7ac45718f6d1de394d) package.json CHANGELOG.md 回滚方式调整 @***xiajieqiong***
+
 ## [v1.0.3](https://github.com/xjq7/changelog/-/compare/v1.0.2...v1.0.3)
 
 ### 🐛 Bug Fix
