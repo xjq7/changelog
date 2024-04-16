@@ -67,11 +67,7 @@ export async function add(files: string[]) {
 }
 
 export async function resetLastCommit() {
-  return Promise.all([
-    execa('git', ['stash']),
-    execa('git', ['reset', '--hard', 'HEAD~1']),
-    execa('git', ['stash', 'pop']),
-  ]);
+  return execa('git', ['reset', '--hard', 'HEAD~1']).then((res) => res.stdout);
 }
 
 export async function status() {
