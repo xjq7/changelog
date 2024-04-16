@@ -77,3 +77,7 @@ export async function resetLastCommit() {
 export async function status() {
   return execa('git', ['status', '--porcelain']).then((res) => res.stdout);
 }
+
+export async function resetFile(file: string) {
+  return execa('git', ['checkout', '--', file]).then((res) => res.stdout);
+}

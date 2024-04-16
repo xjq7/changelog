@@ -115,8 +115,8 @@ export default class Changelog {
 
     let originContent = fs.readFileSync('CHANGELOG.md', 'utf8');
 
-    this.rollingBackQueue.push(() => {
-      fs.writeFileSync('CHANGELOG.md', originContent, 'utf8');
+    this.rollingBackQueue.push(async () => {
+      await git.resetFile('CHANGELOG.md');
       console.log('CHANGELOG.md 文件变更已回滚');
     });
 
@@ -309,8 +309,8 @@ export default class Changelog {
     newPkgJson.version = this.to;
     fs.writeFileSync(pkgPath, JSON.stringify(newPkgJson, null, 2) + '\n', 'utf8');
 
-    this.rollingBackQueue.push(() => {
-      fs.writeFileSync(pkgPath, pkgStr, 'utf8');
+    this.rollingBackQueue.push(async () => {
+      await git.resetFile('package.json');
       console.log('package.json 版本变更已回滚');
     });
 
