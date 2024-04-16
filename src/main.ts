@@ -221,7 +221,7 @@ export default class Changelog {
 
     const changelog = template({
       version: this.to,
-      compareLink: `https://${host}/${repository}/-/compare/v${this.from}...v${this.to}`,
+      compareLink: `https://${host}/${repository}/compare/v${this.from}...v${this.to}`,
       commits: commitGroups,
       dependenciesDiff: formatDependenciesDiff,
     });
