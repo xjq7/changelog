@@ -1,2 +1,1 @@
-# changelog
-changelog generator
+# Changelog 生成工具

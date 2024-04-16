@@ -1,0 +1,19 @@
+## [v{{version}}]({{compareLink}})
+{{#if commits}}
+{{#each commits}}
+
+### {{title}}
+
+{{#each list}}
+- [{{sha}}]({{commitLink}}) {{description}} @***{{authorName}}***
+{{/each}}
+{{/each}}
+{{/if}}
+{{#if dependenciesDiff}}
+
+### 🛠️ Dependencies
+
+| devDependencies                           | dependencies                                                                                                    |
+| ----------------------------------------- | ----------------------------------------- |
+{{#each dependenciesDiff}}{{#insertLineBreak @index}}{{/insertLineBreak}}{{#ifEvenIndex @index}}{{/ifEvenIndex}}{{{this}}}|{{/each}}
+{{/if}}
