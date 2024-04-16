@@ -266,9 +266,9 @@ export default class Changelog {
 
     await this.updateVersion();
 
-    // await this.releaseCommit();
+    await this.releaseCommit();
 
-    // await await this.generateTag();
+    await await this.generateTag();
   }
 
   /**
