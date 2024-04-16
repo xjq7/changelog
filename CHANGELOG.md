@@ -1,5 +1,12 @@
 # Changelog
 
+## [v1.0.3](https://github.com/xjq7/changelog/-/compare/v1.0.2...v1.0.3)
+
+### 🐛 Bug Fix
+
+- [1e1c6b8](https://github.com/xjq7/changelog/commit/1e1c6b8cb4069ab43d836400e4a8b45793988d59) 修复 compare 链接 @***xiajieqiong***
+- [50a0518](https://github.com/xjq7/changelog/commit/50a0518b6f8b7cbd8a51abd678e6bd88d0793d28) 加入前置文件变更检测(package.json、CHANGELOG.md) @***xiajieqiong***
+
 ## [v1.0.2](https://github.com/xjq7/changelog/-/compare/v1.0.1...v1.0.2)
 
 ### 🐛 Bug Fix
