@@ -13,6 +13,7 @@ import {
   getTagCommitId,
   pushTag,
   add,
+  resetLastCommit,
 } from './git';
 import Handlebars from 'handlebars';
 import { CommitTypeLabel, defaultMatcher } from './constant';
@@ -268,7 +269,7 @@ export default class Changelog {
 
     await this.releaseCommit();
 
-    await await this.generateTag();
+    await this.generateTag();
   }
 
   /**
@@ -277,6 +278,9 @@ export default class Changelog {
   async releaseCommit() {
     await add(['CHANGELOG.md', 'package.json']);
     await commit(`Release v${this.to}`);
+    this.rollingBackQueue.push(async () => {
+      await resetLastCommit();
+    });
   }
 
   /**
