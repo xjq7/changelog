@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.0.5](https://github.com/xjq7/changelog/compare/v1.0.4...v1.0.5)
+
+### 🐛 Bug Fix
+
+- [8be7ab1](https://github.com/xjq7/changelog/commit/8be7ab18c56d7c2d68dec864477a45b3ceffef99) 修复命令行工具运行 @***xiajieqiong***
+
 ## [v1.0.4](https://github.com/xjq7/changelog/compare/v1.0.3...v1.0.4)
 
 ### 🐛 Bug Fix
