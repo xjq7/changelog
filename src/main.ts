@@ -3,18 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import * as version from './version';
 import * as helper from './helper';
-import {
-  commit,
-  deleteRemoteTag,
-  deleteTag,
-  generateTag,
-  getFileContentByCommitId,
-  getRepo,
-  getTagCommitId,
-  pushTag,
-  add,
-  resetLastCommit,
-} from './git';
+import * as git from './git';
 import Handlebars from 'handlebars';
 import { CommitTypeLabel, defaultMatcher } from './constant';
 import { IDependenciesDiff } from './helper';
@@ -73,7 +62,9 @@ export default class Changelog {
     this.config = { type, matcher };
     await this.configCheck(this.config);
 
-    this.repo = await getRepo();
+    await this.check();
+
+    this.repo = await git.getRepo();
     if (!this.repo) {
       throw new Error('git repo 信息获取失败');
     }
@@ -81,6 +72,22 @@ export default class Changelog {
     const { version } = pkgJson;
     this.from = version;
     console.log(`当前版本号: ${this.from}`);
+  }
+
+  /**
+   * 当前运行环境检测
+   */
+  async check() {
+    const gitStatusStdout = await git.status();
+
+    const modifiedFiles = gitStatusStdout.split(/\r?\n/).map((content) => content.replace(/ M /, ''));
+    if (modifiedFiles.includes('package.json')) {
+      throw new Error('请先撤销或提交 package.json 文件的变更');
+    }
+
+    if (modifiedFiles.includes('CHANGELOG.md')) {
+      throw new Error('请先撤销或提交 CHANGELOG.md 文件的变更');
+    }
   }
 
   /**
@@ -188,7 +195,7 @@ export default class Changelog {
         const commits = groupCommits[type];
         const rcommits = commits.map((commit) => {
           const { type, sha, hash, authorName, description, scope } = commit;
-          const commitLink = `${repoUrl}/-/commit/${hash}`;
+          const commitLink = `${repoUrl}/commit/${hash}`;
           return {
             type,
             sha,
@@ -227,19 +234,19 @@ export default class Changelog {
    */
   async generateTag() {
     const tagName = `v${this.to}`;
-    await generateTag(`v${this.to}`);
+    await git.generateTag(`v${this.to}`);
     console.log(`标签 ${tagName} 已生成`);
 
     this.rollingBackQueue.push(async () => {
-      await deleteTag(tagName);
+      await git.deleteTag(tagName);
       console.log('本地 tag 已回滚');
     });
 
-    await pushTag(tagName);
+    await git.pushTag(tagName);
     console.log(`标签 ${tagName} 已推送`);
 
     this.rollingBackQueue.push(async () => {
-      await deleteRemoteTag(tagName);
+      await git.deleteRemoteTag(tagName);
       console.log('远端 tag 已回滚');
     });
   }
@@ -276,10 +283,10 @@ export default class Changelog {
    * 提交变更
    */
   async releaseCommit() {
-    await add(['CHANGELOG.md', 'package.json']);
-    await commit(`Release v${this.to}`);
+    await git.add(['CHANGELOG.md', 'package.json']);
+    await git.commit(`Release v${this.to}`);
     this.rollingBackQueue.push(async () => {
-      await resetLastCommit();
+      await git.resetLastCommit();
     });
   }
 
@@ -359,13 +366,13 @@ export default class Changelog {
    */
   async dependenciesAnalyze(): Promise<[helper.IDependenciesDiff, helper.IDependenciesDiff] | null> {
     const lastTag = `v${this.from}`;
-    const lastTagCommit = await getTagCommitId(lastTag);
+    const lastTagCommit = await git.getTagCommitId(lastTag);
 
     if (!lastTagCommit) return null;
 
-    const lastPackageJsonContent = await getFileContentByCommitId(lastTagCommit, 'package.json');
+    const lastPackageJsonContent = await git.getFileContentByCommitId(lastTagCommit, 'package.json');
 
-    const packageJsonContent = await getFileContentByCommitId('head', 'package.json');
+    const packageJsonContent = await git.getFileContentByCommitId('head', 'package.json');
     const lastPackageJson = JSON.parse(lastPackageJsonContent);
     const packageJson = JSON.parse(packageJsonContent);
 

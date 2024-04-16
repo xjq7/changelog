@@ -73,3 +73,7 @@ export async function resetLastCommit() {
     execa('git', ['stash', 'pop']),
   ]);
 }
+
+export async function status() {
+  return execa('git', ['status', '--porcelain']).then((res) => res.stdout);
+}
