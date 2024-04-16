@@ -5,9 +5,9 @@
   "module": "dist/index.es.js",
   "types": "dist/index.es.d.ts",
   "files": [
-    "bin",
-    "lib",
-    "es"
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
   ],
   "bin": {
     "changelog": "bin/index.js"
